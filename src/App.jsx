@@ -55,15 +55,8 @@ function App() {
     }
   }
 
-  const handleRegister = async () => {
-    try {
-      if (!account) {
-        await connectToBaseWallet()
-      }
-      startRegistration()
-    } catch {
-      setRegistrationState('idle')
-    }
+  const handleRegister = () => {
+    startRegistration()
   }
 
   return (
@@ -123,13 +116,11 @@ function App() {
                 className="cta-btn cta-primary"
                 type="button"
                 onClick={handleRegister}
-                disabled={registrationState === 'pending' || isConnecting}
+                disabled={registrationState === 'pending'}
               >
                 {registrationState === 'pending'
                   ? 'Registering...'
-                  : isConnecting
-                    ? 'Connecting Wallet...'
-                    : 'Register'}
+                  : 'Register'}
               </button>
               <div className="fee-pill">$50</div>
             </div>
