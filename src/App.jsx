@@ -4,6 +4,7 @@ import { base } from 'thirdweb/chains'
 import { useActiveAccount, useConnectModal } from 'thirdweb/react'
 import { createWallet } from 'thirdweb/wallets'
 import { client } from './thirdwebClient'
+import ThreeEnergyBackground from './ThreeEnergyBackground'
 
 const walletOnlyOptions = [
   createWallet('io.metamask', { preferDeepLink: true }),
@@ -16,6 +17,7 @@ const walletOnlyOptions = [
 function App() {
   const [registrationState, setRegistrationState] = useState('idle')
   const timeoutRef = useRef(null)
+  const pageRef = useRef(null)
   const account = useActiveAccount()
   const { connect, isConnecting } = useConnectModal()
 
@@ -23,6 +25,61 @@ function App() {
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    const pageEl = pageRef.current
+    if (!pageEl) return undefined
+
+    let ticking = false
+    let lastY = window.scrollY
+    let flash = 0
+    let decayId = 0
+
+    const clamp = (value, min, max) => Math.max(min, Math.min(max, value))
+
+    const applyVars = () => {
+      const maxScroll = Math.max(document.body.scrollHeight - window.innerHeight, 1)
+      const progress = clamp(window.scrollY / maxScroll, 0, 1)
+      pageEl.style.setProperty('--scroll-progress', progress.toFixed(4))
+      pageEl.style.setProperty('--scroll-flash', flash.toFixed(3))
+    }
+
+    const decayFlash = () => {
+      flash = Math.max(0, flash - 0.035)
+      applyVars()
+      if (flash > 0) {
+        decayId = window.requestAnimationFrame(decayFlash)
+      }
+    }
+
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      window.requestAnimationFrame(() => {
+        const y = window.scrollY
+        const speed = Math.abs(y - lastY)
+        lastY = y
+        flash = clamp(flash + speed / 120, 0, 1)
+        applyVars()
+        if (!decayId) {
+          decayId = window.requestAnimationFrame(decayFlash)
+        }
+        ticking = false
+      })
+    }
+
+    applyVars()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', applyVars)
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', applyVars)
+      if (decayId) {
+        window.cancelAnimationFrame(decayId)
       }
     }
   }, [])
@@ -60,11 +117,32 @@ function App() {
   }
 
   return (
-    <div className="page">
+    <div className="page" ref={pageRef}>
+      <ThreeEnergyBackground />
       <div className="ambient ambient-1" aria-hidden="true" />
       <div className="ambient ambient-2" aria-hidden="true" />
-      <div className="grid-overlay" aria-hidden="true" />
-
+      <div className="plasma-haze haze-1" aria-hidden="true" />
+      <div className="plasma-haze haze-2" aria-hidden="true" />
+      <div className="plasma-haze haze-3" aria-hidden="true" />
+      <div className="energy-line" aria-hidden="true" />
+      <div className="top-lightning top-lightning-left" aria-hidden="true" />
+      <div className="top-lightning top-lightning-right" aria-hidden="true" />
+      <div className="energy-core" aria-hidden="true" />
+      <div className="electric electric-left" aria-hidden="true" />
+      <div className="electric electric-right" aria-hidden="true" />
+      <div className="lightning-layer" aria-hidden="true">
+        <span className="bolt bolt-top-l" />
+        <span className="bolt bolt-top-r" />
+        <span className="bolt bolt-l1" />
+        <span className="bolt bolt-l2" />
+        <span className="bolt bolt-l3" />
+        <span className="bolt bolt-r1" />
+        <span className="bolt bolt-r2" />
+        <span className="bolt bolt-r3" />
+        <span className="bolt bolt-b1" />
+        <span className="bolt bolt-b2" />
+        <span className="bolt bolt-b3" />
+      </div>
       <header className="topbar">
         <div className="brand">
           <span className="brand-dot" />
@@ -81,26 +159,21 @@ function App() {
       </header>
 
       <main className="content">
-        <section className="hero-with-image">
-          <article className="hero glass-panel">
-            <h1>About NetWeave</h1>
-            <p>
-              NetWeave is an AI and blockchain technology company focused on building the
-              infrastructure for the next generation of AI-powered digital economies.
-            </p>
-            <p>
-              Our vision is to create a blockchain ecosystem where AI agents and humans can
-              interact safely, transparently, and efficiently.
-            </p>
-            <p>
-              By combining education, real-world applications, and decentralized technology,
-              NetWeave aims to make blockchain and AI more accessible to millions of people
-              worldwide.
-            </p>
-          </article>
-          <article className="side-image glass-panel">
-            <img src="/images/netweave-theme-1.jpeg" alt="Neural Pod Program" />
-          </article>
+        <section className="hero glass-panel">
+          <h1>About NetWeave</h1>
+          <p>
+            NetWeave is an AI and blockchain technology company focused on building the
+            infrastructure for the next generation of AI-powered digital economies.
+          </p>
+          <p>
+            Our vision is to create a blockchain ecosystem where AI agents and humans can
+            interact safely, transparently, and efficiently.
+          </p>
+          <p>
+            By combining education, real-world applications, and decentralized technology,
+            NetWeave aims to make blockchain and AI more accessible to millions of people
+            worldwide.
+          </p>
         </section>
 
         <section className="register-section">
@@ -154,15 +227,6 @@ function App() {
               </button>
             </div>
           )}
-        </section>
-
-        <section className="mid-image-pair">
-          <article className="mid-image">
-            <img src="/images/netweave-theme-2.jpeg" alt="Neural Pod Epoch" />
-          </article>
-          <article className="mid-image">
-            <img src="/images/netweave-theme-3.jpeg" alt="Neural Pod Expansion Blocks" />
-          </article>
         </section>
 
         <section className="glass-panel section-block">
@@ -313,7 +377,7 @@ function App() {
           </article>
         </section>
 
-        <section className="glass-panel notice">
+        <section className="glass-panel notice section-block">
           <h2>Important Notice</h2>
           <p>
             NetWeave focuses on technology development, education, and ecosystem
