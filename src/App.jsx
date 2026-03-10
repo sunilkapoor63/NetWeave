@@ -229,6 +229,151 @@ function App() {
           )}
         </section>
 
+        <section className="epoch-ui" aria-label="Neural Pod Epoch">
+          <div className="epoch-top-arcs" aria-hidden="true">
+            <span className="epoch-arc epoch-arc-left" />
+            <span className="epoch-arc epoch-arc-right" />
+          </div>
+          <h2>Neural Pod Epoch</h2>
+
+          <div className="epoch-day-row">
+            <span>Day 1</span>
+            <span>Day 6</span>
+          </div>
+
+          <div className="epoch-main-row">
+            <div className="epoch-pods epoch-pods-left" aria-hidden="true">
+              {Array.from({ length: 10 }).map((_, index) => (
+                <span className="epoch-pod" key={`left-pod-${index}`} />
+              ))}
+            </div>
+
+            <div className="epoch-arrow-wrap">
+              <p className="epoch-growth">+30%</p>
+              <div className="epoch-arrow" aria-hidden="true">
+                <span className="epoch-arrow-line" />
+                <span className="epoch-arrow-head" />
+              </div>
+              <p className="epoch-after">After 6 Days</p>
+            </div>
+
+            <div className="epoch-pods epoch-pods-right" aria-hidden="true">
+              {Array.from({ length: 13 }).map((_, index) => (
+                <span className="epoch-pod" key={`right-pod-${index}`} />
+              ))}
+            </div>
+          </div>
+
+          <div className="epoch-card-row">
+            <article className="epoch-card">
+              <p className="epoch-card-day">Day 1</p>
+              <p className="epoch-card-pods">50 Neural Pods</p>
+            </article>
+            <article className="epoch-card">
+              <p className="epoch-card-day">Day 6</p>
+              <p className="epoch-card-pods">65 Neural Pods</p>
+            </article>
+          </div>
+
+          <div className="epoch-foot">
+            <p>
+              Neural Pods expand <strong>30%</strong> every Epoch.
+            </p>
+            <p>Each Epoch lasts 6 days.</p>
+          </div>
+        </section>
+
+        <section className="expansion-ui" aria-label="Neural Pod Expansion Blocks">
+          <div className="expansion-top-arcs" aria-hidden="true">
+            <span className="expansion-arc expansion-arc-left" />
+            <span className="expansion-arc expansion-arc-right" />
+          </div>
+          <h2>Neural Pod Expansion Blocks</h2>
+
+          <div className="expansion-row">
+            <article className="expansion-block">
+              <p className="expansion-block-title">Block 1</p>
+              <p className="expansion-block-sub">Network Bootstrap</p>
+              <div className="expansion-pods" aria-hidden="true">
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <span className="expansion-pod" key={`exp-b1-${index}`} />
+                ))}
+              </div>
+              <div className="expansion-bottom">
+                <p className="expansion-bottom-line">Epoch every</p>
+                <p className="expansion-bottom-days">6 days</p>
+              </div>
+            </article>
+
+            <span className="expansion-link-arrow" aria-hidden="true" />
+
+            <article className="expansion-block">
+              <p className="expansion-block-title">Block 2</p>
+              <p className="expansion-block-sub">Expansion Phase</p>
+              <div className="expansion-pods" aria-hidden="true">
+                {Array.from({ length: 7 }).map((_, index) => (
+                  <span className="expansion-pod" key={`exp-b2-${index}`} />
+                ))}
+              </div>
+              <div className="expansion-bottom">
+                <p className="expansion-bottom-line">Epoch every</p>
+                <p className="expansion-bottom-days">8 days</p>
+              </div>
+              <p className="expansion-plus-note">(+2 days)</p>
+            </article>
+
+            <span className="expansion-link-arrow" aria-hidden="true" />
+
+            <article className="expansion-block">
+              <p className="expansion-block-title">Block 3</p>
+              <p className="expansion-block-sub">Scaling Phase</p>
+              <div className="expansion-pods" aria-hidden="true">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <span className="expansion-pod" key={`exp-b3-${index}`} />
+                ))}
+              </div>
+              <div className="expansion-bottom">
+                <p className="expansion-bottom-line">Epoch every</p>
+                <p className="expansion-bottom-days">10 days</p>
+              </div>
+              <p className="expansion-plus-note">(+2 days)</p>
+            </article>
+
+            <span className="expansion-link-arrow" aria-hidden="true" />
+
+            <article className="expansion-block">
+              <p className="expansion-block-title">Block 4</p>
+              <p className="expansion-block-sub">Stability Phase</p>
+              <div className="expansion-pods" aria-hidden="true">
+                {Array.from({ length: 8 }).map((_, index) => (
+                  <span className="expansion-pod" key={`exp-b4-${index}`} />
+                ))}
+              </div>
+              <div className="expansion-bottom">
+                <p className="expansion-bottom-line">Epoch every</p>
+                <p className="expansion-bottom-days">12 days</p>
+              </div>
+              <p className="expansion-plus-note">(+2 days)</p>
+            </article>
+
+            <span className="expansion-link-arrow" aria-hidden="true" />
+
+            <div className="expansion-tail">
+              <p className="expansion-tail-plus">+2 +2 +2</p>
+              <div className="expansion-tail-pods" aria-hidden="true">
+                {Array.from({ length: 11 }).map((_, index) => (
+                  <span className="expansion-pod expansion-pod-small" key={`exp-tail-${index}`} />
+                ))}
+              </div>
+              <p className="expansion-tail-text">And so on...</p>
+            </div>
+          </div>
+
+          <p className="expansion-foot">
+            Expansion timing increases gradually to maintain a stable AI ecosystem.
+          </p>
+        </section>
+
         <section className="glass-panel section-block">
           <h2>Building the Future of AI Agents</h2>
           <p>
