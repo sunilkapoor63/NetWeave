@@ -732,13 +732,22 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  gap: 12px;
+  gap: 20px;
+}
+
+.register-card {
+  align-items: center;
+  text-align: center;
 }
 
 .register-panel h2,
 .register-card h2 {
   margin: 0;
   font-family: "Orbitron", sans-serif;
+}
+
+.register-card h2 {
+  text-align: center;
 }
 
 .register-panel p {
@@ -761,9 +770,9 @@
   width: min(760px, 100%);
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 8px;
-  margin-bottom: 8px;
+  gap: 25px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .buy-info-box {
@@ -792,6 +801,177 @@
   max-width: 780px;
   color: #cfe9ff;
   text-align: center;
+}
+
+.team-section {
+  border: 1px solid rgba(115, 224, 255, 0.38);
+  border-radius: 14px;
+  padding: 20px 16px;
+  background: linear-gradient(180deg, rgba(7, 28, 53, 0.55), rgba(5, 20, 39, 0.42));
+  margin-bottom: 70px;
+  width: min(520px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.team-section h3 {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.25rem;
+  color: #e8f5ff;
+  text-align: center;
+}
+
+.team-view-btn {
+  border: 1px solid rgba(248, 208, 110, 0.68);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: linear-gradient(135deg, rgba(248, 208, 110, 0.2), rgba(255, 225, 138, 0.08));
+  color: #ffe8af;
+  font-weight: 700;
+  font-family: "Space Grotesk", sans-serif;
+  cursor: pointer;
+}
+
+.team-total-count {
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1;
+  color: #ffd86d;
+}
+
+.team-view-btn:hover {
+  box-shadow: 0 0 14px rgba(248, 208, 110, 0.35);
+}
+
+.team-content {
+  margin-top: 24px;
+}
+
+.team-tree-page h1 {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1.45rem, 2.2vw, 2rem);
+  color: #e9f7ff;
+}
+
+.team-page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.team-back-btn {
+  border: 1px solid rgba(115, 224, 255, 0.45);
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: rgba(8, 28, 53, 0.54);
+  color: #d4efff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.team-back-btn:hover {
+  box-shadow: 0 0 12px rgba(115, 224, 255, 0.35);
+}
+
+.team-overview {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.team-overview-card {
+  border: 1px solid rgba(115, 224, 255, 0.3);
+  border-radius: 12px;
+  padding: 14px;
+  background: rgba(6, 23, 43, 0.5);
+  display: grid;
+  gap: 5px;
+}
+
+.team-overview-card span {
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.team-overview-card strong {
+  font-size: 1.25rem;
+  color: #ebf8ff;
+}
+
+.team-level-list {
+  display: grid;
+  gap: 10px;
+}
+
+.team-level-row {
+  border: 1px solid rgba(115, 224, 255, 0.28);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: linear-gradient(180deg, rgba(8, 30, 56, 0.48), rgba(5, 21, 39, 0.42));
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.team-level-head {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 14px;
+  align-items: center;
+}
+
+.team-level-title,
+.team-level-members,
+.team-level-reward {
+  margin: 0;
+}
+
+.team-level-title {
+  color: #eff8ff;
+  font-weight: 700;
+}
+
+.team-level-members {
+  color: #c8e4fb;
+}
+
+.team-level-reward {
+  color: #ffd86d;
+  font-weight: 700;
+}
+
+.team-level-tree {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.team-node {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 38% 35%, #ffffff 0%, #8cf5ff 40%, #1d7f9f 100%);
+  box-shadow: 0 0 8px rgba(123, 243, 255, 0.65);
+}
+
+.team-node.origin {
+  background: radial-gradient(circle at 35% 35%, #fff1cc 0%, #ffd86d 44%, #9f7420 100%);
+  box-shadow: 0 0 9px rgba(248, 208, 110, 0.7);
+}
+
+.team-branch {
+  width: 22px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(115, 224, 255, 0.95), rgba(248, 208, 110, 0.75));
+  box-shadow: 0 0 7px rgba(115, 224, 255, 0.35);
 }
 
 .epoch-ui {
@@ -1436,6 +1616,20 @@ li {
     grid-template-columns: 1fr;
   }
 
+  .team-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .team-level-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .team-level-head {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
   .side-image {
     min-height: 240px;
   }
@@ -1521,6 +1715,15 @@ li {
   .wallet-connect-btn {
     padding: 9px 14px;
     font-size: 0.9rem;
+  }
+
+  .team-page-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .team-level-head {
+    grid-template-columns: 1fr;
   }
 
   .content {

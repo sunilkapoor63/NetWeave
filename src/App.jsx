@@ -16,6 +16,7 @@ const walletOnlyOptions = [
 
 function App() {
   const [registrationState, setRegistrationState] = useState('idle')
+  const [activePage, setActivePage] = useState('home')
   const timeoutRef = useRef(null)
   const pageRef = useRef(null)
   const account = useActiveAccount()
@@ -28,6 +29,12 @@ function App() {
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (registrationState !== 'registered' && activePage === 'team') {
+      setActivePage('home')
+    }
+  }, [activePage, registrationState])
 
   useEffect(() => {
     const pageEl = pageRef.current
@@ -116,6 +123,28 @@ function App() {
     startRegistration()
   }
 
+  const referralLevels = Array.from({ length: 15 }, (_, index) => {
+    const level = index + 1
+    const members = level === 1 ? 1 : level <= 5 ? Math.max(0, 6 - level) : 0
+    return {
+      level,
+      members,
+      rewardPercent: '2%',
+    }
+  })
+
+  const handleOpenTeamPage = () => {
+    if (registrationState === 'registered') {
+      setActivePage('team')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
+  const handleBackToHome = () => {
+    setActivePage('home')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <div className="page" ref={pageRef}>
       <ThreeEnergyBackground />
@@ -158,7 +187,55 @@ function App() {
         </button>
       </header>
 
-      <main className="content">
+      {activePage === 'team' ? (
+        <main className="content team-content">
+          <section className="glass-panel section-block team-tree-page">
+            <div className="team-page-head">
+              <button className="team-back-btn" type="button" onClick={handleBackToHome}>
+                Go Back
+              </button>
+              <h1>Your Team</h1>
+            </div>
+
+            <div className="team-overview">
+              <article className="team-overview-card">
+                <span>Total Team Members</span>
+                <strong>{referralLevels.reduce((sum, level) => sum + level.members, 0)}</strong>
+              </article>
+              <article className="team-overview-card">
+                <span>Active Levels</span>
+                <strong>{referralLevels.filter((level) => level.members > 0).length}</strong>
+              </article>
+              <article className="team-overview-card">
+                <span>Max Levels</span>
+                <strong>15</strong>
+              </article>
+            </div>
+
+            <div className="team-level-list" aria-label="Referral Levels">
+              {referralLevels.map((item) => (
+                <article className="team-level-row" key={`team-level-${item.level}`}>
+                  <div className="team-level-head">
+                    <p className="team-level-title">LEVEL {item.level}</p>
+                    <p className="team-level-members">{item.members} Members</p>
+                    <p className="team-level-reward">{item.rewardPercent}</p>
+                  </div>
+                  <div className="team-level-tree" aria-hidden="true">
+                    <span className="team-node origin" />
+                    <span className="team-branch" />
+                    <span className="team-node" />
+                    <span className="team-branch" />
+                    <span className="team-node" />
+                    <span className="team-branch" />
+                    <span className="team-node" />
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </main>
+      ) : (
+        <main className="content">
         <section className="hero glass-panel">
           <h1>About NetWeave</h1>
           <p>
@@ -199,6 +276,13 @@ function App() {
             </div>
           ) : (
             <div className="register-card">
+              <div className="team-section">
+                <h3>Your Team</h3>
+                <strong className="team-total-count">35</strong>
+                <button className="team-view-btn" type="button" onClick={handleOpenTeamPage}>
+                  View All
+                </button>
+              </div>
               <h2>Buy Pods</h2>
               <div className="buy-info-grid">
                 <div className="buy-info-box">
@@ -222,156 +306,11 @@ function App() {
                 Registration is complete. Full platform features are being enabled and
                 will be available to you in the coming days.
               </p>
-              <button className="cta-btn cta-secondary" type="button" disabled>
-                Buy
+              <button className="cta-btn cta-secondary" type="button" disabled aria-disabled="true">
+                Coming Soon...
               </button>
             </div>
           )}
-        </section>
-
-        <section className="epoch-ui" aria-label="Neural Pod Epoch">
-          <div className="epoch-top-arcs" aria-hidden="true">
-            <span className="epoch-arc epoch-arc-left" />
-            <span className="epoch-arc epoch-arc-right" />
-          </div>
-          <h2>Neural Pod Epoch</h2>
-
-          <div className="epoch-day-row">
-            <span>Day 1</span>
-            <span>Day 6</span>
-          </div>
-
-          <div className="epoch-main-row">
-            <div className="epoch-pods epoch-pods-left" aria-hidden="true">
-              {Array.from({ length: 10 }).map((_, index) => (
-                <span className="epoch-pod" key={`left-pod-${index}`} />
-              ))}
-            </div>
-
-            <div className="epoch-arrow-wrap">
-              <p className="epoch-growth">+30%</p>
-              <div className="epoch-arrow" aria-hidden="true">
-                <span className="epoch-arrow-line" />
-                <span className="epoch-arrow-head" />
-              </div>
-              <p className="epoch-after">After 6 Days</p>
-            </div>
-
-            <div className="epoch-pods epoch-pods-right" aria-hidden="true">
-              {Array.from({ length: 13 }).map((_, index) => (
-                <span className="epoch-pod" key={`right-pod-${index}`} />
-              ))}
-            </div>
-          </div>
-
-          <div className="epoch-card-row">
-            <article className="epoch-card">
-              <p className="epoch-card-day">Day 1</p>
-              <p className="epoch-card-pods">50 Neural Pods</p>
-            </article>
-            <article className="epoch-card">
-              <p className="epoch-card-day">Day 6</p>
-              <p className="epoch-card-pods">65 Neural Pods</p>
-            </article>
-          </div>
-
-          <div className="epoch-foot">
-            <p>
-              Neural Pods expand <strong>30%</strong> every Epoch.
-            </p>
-            <p>Each Epoch lasts 6 days.</p>
-          </div>
-        </section>
-
-        <section className="expansion-ui" aria-label="Neural Pod Expansion Blocks">
-          <div className="expansion-top-arcs" aria-hidden="true">
-            <span className="expansion-arc expansion-arc-left" />
-            <span className="expansion-arc expansion-arc-right" />
-          </div>
-          <h2>Neural Pod Expansion Blocks</h2>
-
-          <div className="expansion-row">
-            <article className="expansion-block">
-              <p className="expansion-block-title">Block 1</p>
-              <p className="expansion-block-sub">Network Bootstrap</p>
-              <div className="expansion-pods" aria-hidden="true">
-                {Array.from({ length: 6 }).map((_, index) => (
-                  <span className="expansion-pod" key={`exp-b1-${index}`} />
-                ))}
-              </div>
-              <div className="expansion-bottom">
-                <p className="expansion-bottom-line">Epoch every</p>
-                <p className="expansion-bottom-days">6 days</p>
-              </div>
-            </article>
-
-            <span className="expansion-link-arrow" aria-hidden="true" />
-
-            <article className="expansion-block">
-              <p className="expansion-block-title">Block 2</p>
-              <p className="expansion-block-sub">Expansion Phase</p>
-              <div className="expansion-pods" aria-hidden="true">
-                {Array.from({ length: 7 }).map((_, index) => (
-                  <span className="expansion-pod" key={`exp-b2-${index}`} />
-                ))}
-              </div>
-              <div className="expansion-bottom">
-                <p className="expansion-bottom-line">Epoch every</p>
-                <p className="expansion-bottom-days">8 days</p>
-              </div>
-              <p className="expansion-plus-note">(+2 days)</p>
-            </article>
-
-            <span className="expansion-link-arrow" aria-hidden="true" />
-
-            <article className="expansion-block">
-              <p className="expansion-block-title">Block 3</p>
-              <p className="expansion-block-sub">Scaling Phase</p>
-              <div className="expansion-pods" aria-hidden="true">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <span className="expansion-pod" key={`exp-b3-${index}`} />
-                ))}
-              </div>
-              <div className="expansion-bottom">
-                <p className="expansion-bottom-line">Epoch every</p>
-                <p className="expansion-bottom-days">10 days</p>
-              </div>
-              <p className="expansion-plus-note">(+2 days)</p>
-            </article>
-
-            <span className="expansion-link-arrow" aria-hidden="true" />
-
-            <article className="expansion-block">
-              <p className="expansion-block-title">Block 4</p>
-              <p className="expansion-block-sub">Stability Phase</p>
-              <div className="expansion-pods" aria-hidden="true">
-                {Array.from({ length: 8 }).map((_, index) => (
-                  <span className="expansion-pod" key={`exp-b4-${index}`} />
-                ))}
-              </div>
-              <div className="expansion-bottom">
-                <p className="expansion-bottom-line">Epoch every</p>
-                <p className="expansion-bottom-days">12 days</p>
-              </div>
-              <p className="expansion-plus-note">(+2 days)</p>
-            </article>
-
-            <span className="expansion-link-arrow" aria-hidden="true" />
-
-            <div className="expansion-tail">
-              <p className="expansion-tail-plus">+2 +2 +2</p>
-              <div className="expansion-tail-pods" aria-hidden="true">
-                {Array.from({ length: 11 }).map((_, index) => (
-                  <span className="expansion-pod expansion-pod-small" key={`exp-tail-${index}`} />
-                ))}
-              </div>
-              <p className="expansion-tail-text">And so on...</p>
-            </div>
-          </div>
-
-          <p className="expansion-foot">
-            Expansion timing increases gradually to maintain a stable AI ecosystem.
-          </p>
         </section>
 
         <section className="glass-panel section-block">
@@ -538,6 +477,7 @@ function App() {
           </p>
         </section>
       </main>
+      )}
     </div>
   )
 }
